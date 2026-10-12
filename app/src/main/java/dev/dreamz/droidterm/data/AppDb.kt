@@ -1,6 +1,7 @@
 package dev.dreamz.droidterm.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Delete
@@ -89,6 +90,30 @@ data class SshKeyEntity(
     val createdAt: Long = System.currentTimeMillis(),
 )
 
+/** A saved shell script (Scripts tab). Also written to ~/scripts/<file> so it can be run from any shell. */
+@Entity(tableName = "scripts")
+data class ScriptEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val name: String,
+    val description: String = "",
+    val body: String,
+    /** Run through su (chroot, mounts, anything needing root). */
+    val needsRoot: Boolean = false,
+    val createdAt: Long = System.currentTimeMillis(),
+    val updatedAt: Long = System.currentTimeMillis(),
+)
+
+@Dao
+interface ScriptDao {
+    @Query("SELECT * FROM scripts ORDER BY name COLLATE NOCASE")
+    fun all(): Flow<List<ScriptEntity>>
+    @Query("SELECT * FROM scripts") suspend fun list(): List<ScriptEntity>
+    @Query("SELECT COUNT(*) FROM scripts") suspend fun count(): Int
+    @Insert suspend fun insert(s: ScriptEntity): Long
+    @Update suspend fun update(s: ScriptEntity)
+    @Delete suspend fun delete(s: ScriptEntity)
+}
+
 @Dao
 interface TaskDao {
     @Query(
@@ -169,14 +194,16 @@ interface SshDao {
 }
 
 @Database(
-    entities = [TaskEntity::class, StepEntity::class, BookmarkEntity::class, SshHostEntity::class, SshKeyEntity::class],
-    version = 1,
+    entities = [TaskEntity::class, StepEntity::class, BookmarkEntity::class, SshHostEntity::class, SshKeyEntity::class, ScriptEntity::class],
+    version = 2,
     exportSchema = true,
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
 )
 abstract class AppDb : RoomDatabase() {
     abstract fun tasks(): TaskDao
     abstract fun bookmarks(): BookmarkDao
     abstract fun ssh(): SshDao
+    abstract fun scripts(): ScriptDao
 
     companion object {
         lateinit var db: AppDb

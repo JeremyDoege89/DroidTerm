@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
     implementation(libs.jsch)
+    implementation(libs.anthropic)
     implementation(libs.bcprov)
     testImplementation(libs.junit)
 }

@@ -56,9 +56,21 @@ private val STARTERS = listOf(
     "Installed packages" to "pm list packages -3",
 )
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BookmarksScreen() {
+    var tab by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableIntStateOf(0) }
+    Column(Modifier.fillMaxSize()) {
+        androidx.compose.material3.PrimaryTabRow(selectedTabIndex = tab) {
+            androidx.compose.material3.Tab(tab == 0, { tab = 0 }, text = { Text("Commands") })
+            androidx.compose.material3.Tab(tab == 1, { tab = 1 }, text = { Text("Scripts") })
+        }
+        if (tab == 0) CommandsTab() else ScriptsTab()
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun CommandsTab() {
     val dao = AppDb.db.bookmarks()
     val marks by dao.all().collectAsState(initial = null)
     val scope = rememberCoroutineScope()

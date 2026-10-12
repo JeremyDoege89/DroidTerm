@@ -10,6 +10,7 @@ core-ktx = "1.19.1"
 coroutines = "1.11.0"
 annotation = "1.9.1"
 jsch = "2.28.8"
+anthropic = "2.71.0"
 bouncycastle = "1.86"
 junit = "4.13.2"
 
@@ -28,6 +29,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 jsch = { group = "com.github.mwiede", name = "jsch", version.ref = "jsch" }
+anthropic = { group = "com.anthropic", name = "anthropic-java", version.ref = "anthropic" }
 bcprov = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bouncycastle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 

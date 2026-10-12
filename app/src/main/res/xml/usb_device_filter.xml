@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ADB interface: vendor class 0xff, subclass 0x42, protocol 1 -->
+    <usb-device class="255" subclass="66" protocol="1" />
+    <!-- fastboot interface: protocol 3 -->
+    <usb-device class="255" subclass="66" protocol="3" />
+</resources>

@@ -1,0 +1,9 @@
+-keep class com.jcraft.jsch.** { *; }
+-keep class org.bouncycastle.** { *; }
+-dontwarn org.bouncycastle.**
+-dontwarn com.jcraft.jsch.**
+-dontwarn org.slf4j.**
+-dontwarn org.apache.logging.**
+-dontwarn org.ietf.jgss.**
+-dontwarn com.sun.jna.**
+-keep class com.termux.terminal.JNI { *; }

@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * "Describe it, Claude writes it": turns a plain-language description into a shell script with the Claude API,
+ * "Describe it, get a script": turns a plain-language description into a shell script with an AI model,
  * using the user's own API key (stored encrypted with the Keystore). The result is only a draft the user reviews
  * and edits before saving; nothing is run automatically.
  */
@@ -66,7 +66,7 @@ object ScriptWriter {
                 .maxTokens(16000L)
                 .system(SYSTEM)
                 .addUserMessage(ask)
-                // If a safety classifier declines, Anthropic re-runs the request on its recommended fallback model.
+                // If a safety classifier declines, the server re-runs the request on its recommended fallback model.
                 .addBeta("server-side-fallback-2026-07-01")
                 .putAdditionalBodyProperty("fallbacks", JsonValue.from("default"))
                 .build()
